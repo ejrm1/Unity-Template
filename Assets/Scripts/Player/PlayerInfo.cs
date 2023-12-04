@@ -49,7 +49,6 @@ public class PlayerInfo : MonoBehaviour
     {  
 
         this.transform.position = _spawnpoint.position;
-        // Reset any other states, for example:
         _isAlive = true;
     }
 

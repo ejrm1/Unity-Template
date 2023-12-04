@@ -41,7 +41,6 @@ public class PlayerPhysics: MonoBehaviour {
   public bool IsGrounded() {
     RaycastHit2D hit = Physics2D.Raycast(transform.position, Vector2.down, groundCheckDistance, groundLayers);
     return hit.collider != null;
-
   }
 
   public void ChangeGravityScale(float gravityScale) {
@@ -128,14 +127,18 @@ public class PlayerPhysics: MonoBehaviour {
 
     Vector2 moveAmount = new Vector2(horizontalInput * _playerInfo.MoveSpeed, _rb.velocity.y)*Time.fixedDeltaTime;
 
-    // Adjust the velocity with the collide and slide logic
     moveAmount = CollideAndSlide(moveAmount, transform.position, 0, false);
 
-    // Set the rigidbody's velocity to the result of the CollideAndSlide
     _rb.gameObject.transform.position = _rb.gameObject.transform.position + (Vector3) moveAmount;
 
     movementInput = Vector2.zero;
 
   }
+
+
+
+
+
+
 
 }

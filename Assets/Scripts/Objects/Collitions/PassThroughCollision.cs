@@ -1,18 +1,15 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-
-
 [RequireComponent(typeof(Collider2D))]
-public class PassThroughTrigger : EventTrigger
+public class PassThroughCollision : EventCollision
 {
     private PlayerController playerController;
-    public PlayerController PlayerController { get => playerController; set => playerController = value; }
-    int _playerCount = 0;
-    protected override bool ShouldActivate(Collider2D collision)
-    {
 
+    public PlayerController PlayerController { get => playerController; set => playerController = value; }
+
+    protected override bool ShouldActivate(Collision2D collision)
+    {
         if (_isActive == false) return false;
 
         if (_specificPlayerButton == true)
@@ -24,34 +21,20 @@ public class PassThroughTrigger : EventTrigger
             }
         }
 
-        _playerCount++;
-        if(_playerCount == 1)
-        {
-            playerController = collision.gameObject.GetComponent<PlayerController>();
-            return playerController != null;
-        }
-        return false;
+        playerController = collision.gameObject.GetComponent<PlayerController>();
+        return playerController != null;
     }
 
-    protected override bool ShouldDeactivate(Collider2D collision)
+    protected override bool ShouldDeactivate(Collision2D collision)
     {
         if (_isActive == false) return false;
 
         playerController = collision.gameObject.GetComponent<PlayerController>();
-
-
-        _playerCount--;
-        if (_playerCount == 0)
-        {
-            playerController = collision.gameObject.GetComponent<PlayerController>();
-            return playerController != null;
-        }
-        return false;
+        return playerController != null;
     }
 
     public override void ActivateEvent()
     {
-
         if (playerController)
         {
             if (_isInfiniteButton == true)
@@ -59,7 +42,7 @@ public class PassThroughTrigger : EventTrigger
                 _isActive = false;
             }
 
-            OnTriggerActivated.Invoke();
+            OnCollisionActivated.Invoke();
             IsPressed = true;
         }
     }
@@ -72,11 +55,9 @@ public class PassThroughTrigger : EventTrigger
             IsPressed = false;
         }
     }
+
     protected override void TimerFinished()
     {
-
-        OnTriggerDeactivated.Invoke();
+        OnCollisionDeactivated.Invoke();
     }
-
-
 }

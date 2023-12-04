@@ -14,7 +14,7 @@ public class GenericObjectFunctions : MonoBehaviour
     private bool _isMovingToNextWaypoint = false;
     private bool _isMovingToPreviousWaypoint = false;
 
-    private int playerCountOnButton = 0;
+    
 
 
 
@@ -113,7 +113,7 @@ public class GenericObjectFunctions : MonoBehaviour
     {
         Collider2D collider = GetComponent<Collider2D>();
 
-        if (collider != null && playerCountOnButton < 1)
+        if (collider != null)
         {
             collider.enabled = false;
         }
@@ -124,21 +124,6 @@ public class GenericObjectFunctions : MonoBehaviour
     }
 
 
-    public void ButtonActivated() 
-    {
-        playerCountOnButton++;
-        MoveToNextWaypoint();
-    }
 
-    public void ButtonDeactivated() 
-    { 
-
-        playerCountOnButton--;
-        if (playerCountOnButton <= 0)
-        {
-            playerCountOnButton = 0; 
-            MoveToPreviousWayPoint();
-        }
-    }
 
 }
